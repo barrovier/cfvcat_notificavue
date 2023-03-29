@@ -1,0 +1,311 @@
+<html lang="es"><head>
+        <!-- base href="https://crf3.w3nexus.net/cfvcat_tgneram/dades_objecte.jsp" -->
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+        <meta http-equiv="PRAGMA" content="NO-CACHE">
+        <meta http-equiv="EXPIRES" content="0">
+        <title>
+        CFVCAT-TARGETAGROGA - 1.0.07.dev
+    </title>
+        <link type="text/css" href="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/jquery-ui-1.css" rel="stylesheet">	
+        <script type="text/javascript" src="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/jquery-1.js"></script>
+        <script type="text/javascript" src="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/jquery-ui-1.js"></script>
+        <script type="text/javascript" src="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/validacions.js"></script>
+         
+        <script language="javascript" type="text/javascript">
+        <!--
+            
+        function sortirSenseCanvis() {
+            
+            window.location = "/cfvcat_tgneram/x/seleccionaOpcio?opcio=presentarMenuForms&random=0.9173299339148947";
+            
+            
+        }
+        
+        
+        
+        $(document).ready(function() {
+            $(".ajuda").tooltip({ position: {my: "left+5 center",at: "right+5 center", collision: "fit"}, content: function () {return $(this).prop('title');} });
+
+            
+                        
+            
+            
+            
+            $("#queries").click(function() {
+                queryEstat = 'null';
+                if ((queryEstat!='null' && queryEstat!='T')||(32>32)) {
+                    $.get("/cfvcat_tgneram/x/operacioAjax?opcio=editaQuery", function(data){ eval(data); });
+                }
+            });
+            
+            
+            $("#elements tbody tr:visible:even").addClass("td-value");
+            $("#elements tbody tr:visible:odd").addClass("td-value2");
+            
+            $.datepicker.regional['es'] = {
+		closeText: 'Close',
+		prevText: '&#x3c;Prev',
+		nextText: 'Next&#x3e;',
+		currentText: 'Today',
+		monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+		monthNamesShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+		dayNames: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+		dayNamesShort: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+		dayNamesMin: ['S','M','T','W','T','F','S'],
+		weekHeader: 'Wk',
+		dateFormat: 'dd/mm/yy',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: '',
+		changeYear: true,
+                yearRange: 'c-120:c+3'
+            };
+            
+$('#biologicSN').change(function() {if ( $(this).val()==3 ) { if ( $('#vacunaSN').val()==3 ) { $(this).val(2); alert('El valor de [El medicament és una vacuna?] és [Sí]. Per posar [biològic] a [Sí], cal posar prèviament [vacuna] a [No].'); } else { $('.v_biologicSNSi').show(); } } else { $('.v_biologicSNSi').hide(); if ( $('#vacunaSN').val()!=3 ) { $('#dataVacunacio').val(''); $('#numeroLot').val(''); } }});
+
+$('#vacunaSN').change(function() {if ( $(this).val()==3 ) { $('#biologicSN').val(2); $('.v_vacunaSNSi').show(); $('#vacunaNDosi').trigger('change'); $('#vacunaCOVIDSN').trigger('change'); } else { if ( $('#biologicSN').val()!=3 ) { $('.v_vacunaSNSi').hide(); $('#dataVacunacio').val(''); $('#llocAdmin').val(''); $('#numeroLot').val(''); $('#vacunaNDosi').val(1); $('#vacunaNDosi').trigger('change'); $('#vacunaCOVIDSN').val(1); $('#vacunaCOVIDSN').trigger('change'); } }});
+
+$('#dataVacunacio').change(function() {if ( $(this).val().length > 0 ) { $('#dataInici').val($(this).val()); $('#dataFinal').val($(this).val()); }});
+
+$('#vacunaNDosi').change(function() {if ( $(this).val()>2 ) { $('.v_vacunaNDosi').show(); $('#notiRADosiPrev').trigger('change'); } else { $('.v_vacunaNDosi').hide(); $('#notiRADosiPrev').val(1); $('#notiRADosiPrev').trigger('change'); }});
+
+$('#notiRADosiPrev').change(function() {if ( $(this).val()==3 ) { $('.v_notiRADosiPrevSi').show(); } else { $('.v_notiRADosiPrevSi').hide(); $('#notiRADosiPrevEspecif').val(''); }});
+
+$('#vacunaCOVIDSN').change(function() {if ( $(this).val()==3 ) { $('#prescripcio').val('Inmunización frente a COVID-19'); $('.v_vacunaCOVIDSNSi').show(); $('#vacuna').trigger('change'); $('#pacientHaPatitCOVID').trigger('change'); } else { $('.v_vacunaCOVIDSNSi').hide(); $('#vacuna').val(-1); $('#vacuna').trigger('change'); $('#pacientHaPatitCOVID').val(-1); $('#pacientHaPatitCOVID').trigger('change'); $('.c_gruprisc').each(function() { $(this).attr('checked', false); }); }});
+
+$('#vacuna').change(function() {if ( $(this).val()>=2 && $(this).val()<=9 ) { $('#farmac').val( $('#vacuna option:selected').text() ); } if ( $(this).val()==10 ) { $('.v_vacunaDescono').show(); } else { $('.v_vacunaDescono').hide(); $('#vacunaEspecif').val(''); }});
+
+$('#pacientHaPatitCOVID').change(function() {if ( $(this).val()==3 ) { $('.v_pacientHaPatitCOVIDSi').show(); } else { $('.v_pacientHaPatitCOVIDSi').hide(); $('#existeixProvaPositiva').val(1); $('.c_asimp_simp').attr('checked', false); $('#pacientHaPatitCOVIDEspecif').val(''); }});
+$('#dataVacunacio').datepicker($.datepicker.regional['es']); $('#dataInici').datepicker($.datepicker.regional['es']); $('#dataFinal').datepicker($.datepicker.regional['es']); $('#biologicSN').trigger('change'); $('#vacunaSN').trigger('change'); $('.c_asimp_simp').change(function() { if ( $(this).is(':checked') ) { $('.c_asimp_simp').attr('checked', false); $(this).attr('checked', true); } }); $('#farmac').autocomplete({ source: function( request, response ) { $.ajax({ url: "x/operacioAjax", dataType: "json", data: { opcio: "consultaDiccioFarmEsp", term: $('#farmac').val() }, success: function( data ) { response( $.map( data, function( item ) { return { label: item.label, value: item.value } })); } }); }, select: function (event, ui) { event.preventDefault(); $('#farmac').val( ui.item.label ); } }); 
+            
+                
+            
+                
+            
+            $("#loading").hide();
+            $("#contingut").fadeIn(600);
+        });
+
+        var bCancel = false; 
+        
+        
+        function validaFormulari(form) {
+        
+            if (bCancel) {
+                return true; 
+            } else {                
+                
+                if ( $('#sospitaRAM').val()==1 ) { alert("Sospita RA no especificada!!"); return false; } else if ( ($('#sospitaRAM').val()==2 || $('#sospitaRAM').val()==4) && $('#dataInici').val().trim().length==0 ) { alert("És necessari especificar [Data inici] donada la selecció a [Sospita RA]!!"); return false; }
+                if ( $('#mesuraPresa').val()==1 ) { alert('És necessari especificar [Mesura presa]!!'); return false; }
+                                
+                var formValidationResult;
+                formValidationResult = 1; 
+                return (formValidationResult == 1);
+            }
+         
+        } 
+     
+        -->
+        </script>
+        <link rel="stylesheet" type="text/css" media="all" href="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/reset.css">
+        <link rel="stylesheet" type="text/css" media="all" href="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/text.css">
+        <link rel="stylesheet" type="text/css" media="all" href="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/vgs.css">
+        <link rel="stylesheet" type="text/css" media="all" href="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/site.css">
+        <link rel="stylesheet" type="text/css" media="all" href="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/tgoriginal.css">
+    </head>
+    <body>
+        <center>
+            <div class="container_12" align="left">
+                
+
+
+
+
+
+
+<!--
+  tmpl_header - plantilla de capçalera de pagina 
+-->
+
+<div class="grid_5">
+    <img src="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/logo-cfvcat-rgb.png" style="margin-top:20px;" width="200" border="0">
+</div>
+<div class="grid_7" align="right">
+    <div class="bordered accesoform" align="center">
+        <table width="100%" cellspacing="0" cellpadding="2" border="0">    
+            <tbody><tr><td class="app_name" align="right">CFVCAT-TARGETAGROGA <span class="app_ver">1.0.07.dev</span></td></tr>  
+            <tr><td class="app_desc" style="font-size: 9pt;" align="right">Notificació Espontània TG-RAM :: CFVCAT</td></tr>
+            <tr>
+                
+                    <td class="td-page-username" valign="middle" align="right">
+                        
+                            Joan Miquel Vigo&nbsp;-&nbsp;Centre de Test&nbsp;(CT)   
+                          
+                         
+                        <span id="disconn"><img src="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/disconn.jpg">&nbsp;<a href="https://crf3.w3nexus.net/cfvcat_tgneram/x/usuariLogoff">Desconnectar</a></span>
+                    </td>    
+                
+                    
+            </tr>
+        </tbody></table>        
+    </div>
+</div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 footer" style="margin-bottom: 0px;" align="center">&nbsp;</div>
+
+
+
+                <div class="clear">&nbsp;</div>
+                <div class="grid_12">
+                    
+        <center>
+            <div id="loading" style="display: none;">El formulario se está cargando ... <img src="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/ajax-loader.gif"></div>
+            <div id="contingut" style="">
+            
+            <form action="x/guardaDades" method="post" name="formulari" onsubmit="return validaFormulari(this);">
+                        
+                <table width="100%" cellspacing="1" cellpadding="1" border="0">
+                    <tbody><tr><td class="td-error-format" align="center"></td></tr>
+                    
+                    <tr><td class="td-header" align="right">Notificació:&nbsp;<span id="codiSospita">CT-00003</span>&nbsp;</td></tr>  
+                    
+                    <tr><td class="td-header" align="left">
+                        
+                             Notificació - Fàrmacs
+                        
+                        
+                        ::&nbsp; <span id="queries">queries<img src="CFVCAT-TARGETAGROGA%20-%201.0.07.farmac_vacuna_files/query-null.gif"></span>
+                        
+                        
+                        
+
+                    </td></tr>
+                </tbody></table>
+                
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_biologicSN alpha" style="line-height:1.7em;" align="right">El medicament és biològic?</div><div class="td-value grid_8 f_biologicSN omega" align="left"><select class="txt-default-format" name="biologicSN" id="biologicSN"><option value="1">-</option><option value="2" selected="selected">No</option><option value="3">Sí</option><option value="4">Desc</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_vacunaSN alpha" style="line-height:1.7em;" align="right">El medicament és una vacuna?</div><div class="td-value grid_8 f_vacunaSN omega" align="left"><select class="txt-default-format" name="vacunaSN" id="vacunaSN"><option value="1">-</option><option value="2">No</option><option value="3" selected="selected">Sí</option><option value="4">Desc</option></select>&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="Si s'ha indicat &lt;i&gt;Sí&lt;/i&gt; a &lt;i&gt;El medicament és biològic?&lt;/i&gt;, especificar aquí &lt;i&gt;No&lt;/i&gt; com a resposta."></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaSNSi v_biologicSNSi alpha omega" style=""><div class="td-value2-bold grid_4 f_dataVacunacio alpha" style="line-height:1.7em;" align="right">Data vacunació (dd/mm/aaaa)</div><div class="td-value grid_8 f_dataVacunacio omega" align="left"><input type="text" size="12" maxlength="10" class="txt-default-format hasDatepicker" name="dataVacunacio" id="dataVacunacio" value="01/03/2021">&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="L'especificació de la data de la vacuna fixa la data d'inici i final a les dades de la subsecció &lt;i&gt;Medicament&lt;/i&gt;"></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaSNSi v_biologicSNSi alpha omega" style=""><div class="td-value2-bold grid_4 f_numeroLot alpha" style="line-height:1.7em;" align="right">Lot</div><div class="td-value grid_8 f_numeroLot omega" align="left"><input type="text" maxlength="128" class="txt-default-format" name="numeroLot" id="numeroLot"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaSNSi alpha omega" style=""><div class="td-value2-bold grid_4 f_llocAdmin alpha" style="line-height:1.7em;" align="right">Lloc admin.</div><div class="td-value grid_8 f_llocAdmin omega" align="left"><input type="text" maxlength="128" class="txt-default-format" name="llocAdmin" id="llocAdmin"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaSNSi alpha omega" style=""><div class="td-value2-bold grid_4 f_vacunaNDosi alpha" style="line-height:1.7em;" align="right">Nombre de dosi administrada</div><div class="td-value grid_8 f_vacunaNDosi omega" align="left"><select class="txt-default-format" name="vacunaNDosi" id="vacunaNDosi"><option value="1">-</option><option value="2" selected="selected">Primera dosi</option><option value="3">Segona dosi</option><option value="4">Tercera dosi</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaNDosi alpha omega" style="display:none;"><div class="td-value2-bold grid_4 f_notiRADosiPrev alpha" style="line-height:1.7em;" align="right">S'ha notificat RA a alguna dosi prèvia?</div><div class="td-value grid_8 f_notiRADosiPrev omega" align="left"><select class="txt-default-format" name="notiRADosiPrev" id="notiRADosiPrev"><option value="1" selected="selected">-</option><option value="2">No</option><option value="3">Sí</option><option value="4">Desc</option></select>&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="Ha estat notificada reacció adversa a alguna dosi prèvia?"></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_notiRADosiPrevSi alpha omega" style="display:none;"><div class="td-value2-bold grid_4 f_notiRADosiPrevEspecif alpha" style="line-height:1.7em;" align="right">Indicar RA</div><div class="td-value grid_8 f_notiRADosiPrevEspecif omega" align="left"><input type="text" maxlength="256" class="txt-half-format" name="notiRADosiPrevEspecif" id="notiRADosiPrevEspecif">&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="Descriu la reació adversa"></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 alpha omega v_vacunaSNSi" style="">&nbsp;</div><div class="grid_12 alpha omega v_vacunaSNSi td-name-invert" style="">Vacuna COVID-19</div><div class="grid_12 alpha omega v_vacunaSNSi" style="">&nbsp;</div><div class="grid_12 v_vacunaSNSi alpha omega" style=""><div class="td-value2-bold grid_4 f_vacunaCOVIDSN alpha" style="line-height:1.7em;" align="right">La vacuna és per COVID-19?</div><div class="td-value grid_8 f_vacunaCOVIDSN omega" align="left"><select class="txt-default-format" name="vacunaCOVIDSN" id="vacunaCOVIDSN"><option value="1">-</option><option value="2">No</option><option value="3" selected="selected">Sí</option><option value="4">Desc</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_4 f_vacuna alpha" style="line-height:1.7em;" align="right">Nom de la vacuna</div><div class="td-value grid_8 f_vacuna omega" align="left"><select class="txt-default-format" name="vacuna" id="vacuna"><option value="1">-</option><option value="2">VAXZEVRIA SUSPENSION INYECTABLE 10 viales multidosis (10 dosis por vial)</option><option value="3" selected="selected">SPIKEVAX, DISPERSION INYECTABLE 10 viales (multidosis)</option><option value="4">COMIRNATY 30 MICROGRAMOS/DOSIS CONCENTRADO PARA DISPERSIÓN INYECTABLE, 195 viales (multidosis)</option><option value="5">COVID-19 VACCINE JANSSEN SUSPENSION INYECTABLE, 10 viales (multidosis)</option><option value="6">COMIRNATY 10 MICROGRAMOS/DOSIS CONCENTRADO PARA DISPERSION INYECTABLE, 10 viales multidosis</option><option value="7">COMIRNATY 30 MICROGRAMOS/DOSIS DISPERSION INYECTABLE, 10 viales multidosis</option><option value="8">COVID-19 VACCINE JANSSEN SUSPENSION INYECTABLE, 20 viales (multidosis)</option><option value="9">VAXZEVRIA SUSPENSION INYECTABLE 10 viales multidosis (8 dosis por vial)</option><option value="10">Desconeguda</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaDescono alpha omega" style="display:none;"><div class="td-value2-bold grid_4 f_vacunaEspecif alpha" style="line-height:1.7em;" align="right">Inf. addicional sobre la vacuna</div><div class="td-value grid_8 f_vacunaEspecif omega" align="left"><textarea maxlength="1024" class="txt-format" name="vacunaEspecif" id="vacunaEspecif"></textarea></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_4 f_pacientHaPatitCOVID alpha" style="line-height:1.7em;" align="right">COVID-19 abans vacunació?</div><div class="td-value grid_8 f_pacientHaPatitCOVID omega" align="left"><select class="txt-default-format" name="pacientHaPatitCOVID" id="pacientHaPatitCOVID"><option value="1">-</option><option value="2" selected="selected">No</option><option value="3">Sí</option><option value="4">Desc</option></select>&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="El pacient ha passat la COVID-19 abans de la vacunació?"></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_pacientHaPatitCOVIDSi alpha omega" style="display:none;"><div class="td-value2-bold grid_4 f_existeixProvaPositiva alpha" style="line-height:1.7em;" align="right">Hi ha prova positiva?</div><div class="td-value grid_8 f_existeixProvaPositiva omega" align="left"><select class="txt-default-format" name="existeixProvaPositiva" id="existeixProvaPositiva"><option value="1" selected="selected">-</option><option value="2">No</option><option value="3">Sí</option><option value="4">Desc</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_5 v_pacientHaPatitCOVIDSi alpha" style="display:none;"><div class="td-value2-bold grid_4 f_covidAsimptomatic alpha" style="line-height:1.7em;" align="right">Asimptomàtic</div><div class="td-value grid_1 f_covidAsimptomatic omega" align="left"><input type="checkbox" class="txt-default-format c_asimp_simp" name="covidAsimptomatic" id="covidAsimptomatic"></div></div>
+<div class="grid_3 v_pacientHaPatitCOVIDSi" style="display:none;"><div class="td-value2-bold grid_2 f_covidSimptomatic alpha" style="line-height:1.7em;" align="right">Simptomàtic</div><div class="td-value grid_1 f_covidSimptomatic omega" align="left"><input type="checkbox" class="txt-default-format c_asimp_simp" name="covidSimptomatic" id="covidSimptomatic"></div></div>
+<div class="grid_4 v_pacientHaPatitCOVIDSi omega" style="display:none;"><div class="td-value2-bold grid_3 f_covidSimptomaticIH alpha" style="line-height:1.7em;" align="right">Simptomàtic amb ingrès hosp.</div><div class="td-value grid_1 f_covidSimptomaticIH omega" align="left"><input type="checkbox" class="txt-default-format c_asimp_simp" name="covidSimptomaticIH" id="covidSimptomaticIH"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_pacientHaPatitCOVIDSi alpha omega" style="display:none;"><div class="td-value2-bold grid_4 f_pacientHaPatitCOVIDEspecif alpha" style="line-height:1.7em;" align="right">Simptomatologia i proves compl.</div><div class="td-value grid_8 f_pacientHaPatitCOVIDEspecif omega" align="left"><textarea maxlength="1024" class="txt-half-format" name="pacientHaPatitCOVIDEspecif" id="pacientHaPatitCOVIDEspecif"></textarea>&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="Descriviu la simptomatologia i les proves complementàries. Descriviu quan va estar malalt el pacient, si va requerir ingrés hospitalari o en UCI, i si se li va realitzar algun test diagnòstic confirmatori."></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 alpha omega v_vacunaCOVIDSNSi" style="">&nbsp;</div><div class="grid_12 alpha omega v_vacunaCOVIDSNSi td-name-invert" style="">Grup(s) de risc atribuit(s) al pacient</div><div class="grid_12 alpha omega v_vacunaCOVIDSNSi" style="">&nbsp;</div><div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscMajor65Anys alpha" style="line-height:1.7em;" align="right">Major de 65 anys</div><div class="td-value grid_6 f_grupriscMajor65Anys omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscMajor65Anys" id="grupriscMajor65Anys"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscProfSanitari alpha" style="line-height:1.7em;" align="right">Professional sanitari o personal de centre sociosanitari o essencial</div><div class="td-value grid_6 f_grupriscProfSanitari omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscProfSanitari" id="grupriscProfSanitari"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscMalaltiaCardioVascular alpha" style="line-height:1.7em;" align="right">Malaltia cardiovascular (exclosa la HTA)</div><div class="td-value grid_6 f_grupriscMalaltiaCardioVascular omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscMalaltiaCardioVascular" id="grupriscMalaltiaCardioVascular"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscDiabetisTipus2 alpha" style="line-height:1.7em;" align="right">Diabetis tipus II</div><div class="td-value grid_6 f_grupriscDiabetisTipus2 omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscDiabetisTipus2" id="grupriscDiabetisTipus2"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscEPOC alpha" style="line-height:1.7em;" align="right">MPOC</div><div class="td-value grid_6 f_grupriscEPOC omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscEPOC" id="grupriscEPOC"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscCancer alpha" style="line-height:1.7em;" align="right">Càncer</div><div class="td-value grid_6 f_grupriscCancer omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscCancer" id="grupriscCancer"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscTrasplOrganSolid alpha" style="line-height:1.7em;" align="right">Trasplantament d'òrgan sòlid</div><div class="td-value grid_6 f_grupriscTrasplOrganSolid omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscTrasplOrganSolid" id="grupriscTrasplOrganSolid"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscMalaltiaRenalCronica alpha" style="line-height:1.7em;" align="right">Malaltia renal crònica</div><div class="td-value grid_6 f_grupriscMalaltiaRenalCronica omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscMalaltiaRenalCronica" id="grupriscMalaltiaRenalCronica"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscObsesitat alpha" style="line-height:1.7em;" align="right">Obesitat (IMC ? 30)</div><div class="td-value grid_6 f_grupriscObsesitat omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscObsesitat" id="grupriscObsesitat"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscHTA alpha" style="line-height:1.7em;" align="right">HTA</div><div class="td-value grid_6 f_grupriscHTA omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscHTA" id="grupriscHTA"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscDiabetisTipus1 alpha" style="line-height:1.7em;" align="right">Diabetis tipus I</div><div class="td-value grid_6 f_grupriscDiabetisTipus1 omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscDiabetisTipus1" id="grupriscDiabetisTipus1"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscAsma alpha" style="line-height:1.7em;" align="right">Asma</div><div class="td-value grid_6 f_grupriscAsma omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscAsma" id="grupriscAsma"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscImmunosup alpha" style="line-height:1.7em;" align="right">Immunosupressió</div><div class="td-value grid_6 f_grupriscImmunosup omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscImmunosup" id="grupriscImmunosup"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscEmbaras alpha" style="line-height:1.7em;" align="right">Embaràs</div><div class="td-value grid_6 f_grupriscEmbaras omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscEmbaras" id="grupriscEmbaras"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscTrastNeuroPsiq alpha" style="line-height:1.7em;" align="right">Trastorns neuro-psiquiàtrics</div><div class="td-value grid_6 f_grupriscTrastNeuroPsiq omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscTrastNeuroPsiq" id="grupriscTrastNeuroPsiq"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscMalaltiaHapatoCron alpha" style="line-height:1.7em;" align="right">Malaltia hepàtica crònica</div><div class="td-value grid_6 f_grupriscMalaltiaHapatoCron omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscMalaltiaHapatoCron" id="grupriscMalaltiaHapatoCron"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 v_vacunaCOVIDSNSi alpha omega" style=""><div class="td-value2-bold grid_6 f_grupriscTrastMetabolCongen alpha" style="line-height:1.7em;" align="right">Trastorns metabòlics congènits</div><div class="td-value grid_6 f_grupriscTrastMetabolCongen omega" align="left"><input type="checkbox" class="txt-default-format c_gruprisc" name="grupriscTrastMetabolCongen" id="grupriscTrastMetabolCongen"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 alpha omega">&nbsp;</div><div class="grid_12 alpha omega td-name-invert">Medicament</div><div class="grid_12 alpha omega">&nbsp;</div><div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_farmac alpha" style="line-height:1.7em;" align="right">Medicament</div><div class="td-value grid_8 f_farmac omega" align="left"><input type="text" maxlength="256" class="txt-half-format ui-autocomplete-input" name="farmac" id="farmac" value="SPIKEVAX, DISPERSION INYECTABLE 10 viales (multidosis)" autocomplete="off">&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="Mentre escrius, se suggereixen noms comercials de medicaments. Selecciona el que coincideixi amb el medicament administrat. Si no el trobes, escriu lliurement el nom del medicament."></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_sospitaRAM alpha" style="line-height:1.7em;" align="right">Sospita RA</div><div class="td-value grid_8 f_sospitaRAM omega" align="left"><select class="txt-default-format" name="sospitaRAM" id="sospitaRAM"><option value="1">-</option><option value="2" selected="selected">Sospitós</option><option value="3">Concomitant</option><option value="4">Interacció</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_dosi alpha" style="line-height:1.7em;" align="right">Dosi</div><div class="td-value grid_8 f_dosi omega" align="left"><input type="text" maxlength="128" class="txt-default-format" name="dosi" id="dosi"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_viaAdmin alpha" style="line-height:1.7em;" align="right">Via admin.</div><div class="td-value grid_8 f_viaAdmin omega" align="left"><select class="txt-default-format" name="viaAdmin" id="viaAdmin"><option value="1" selected="selected">-</option><option value="2">Altra via</option><option value="3">Auricular (ótica)</option><option value="4">Bucal</option><option value="5">Intradèrmica</option><option value="6">Intramuscular</option><option value="7">Intravenosa bolo</option><option value="8">Intravenosa goteig</option><option value="9">Intravenosa no especificada</option><option value="10">Nasal</option><option value="11">Oftàlmica</option><option value="12">Oral</option><option value="13">Parenteral</option><option value="14">Rectal</option><option value="15">Respiratoria (inhalació)</option><option value="16">Subcutània</option><option value="17">Sublingual</option><option value="18">Tòpica</option><option value="19">Transdèrmica</option><option value="20">Transplacentaria</option><option value="21">Vaginal</option><option value="22">Desconeguda</option><option value="23">Inhalada</option><option value="24">Intravesical</option><option value="25">Venatge oclusiu</option><option value="26">Intradiscal (Intraespinal)</option><option value="27">Cutània</option><option value="28">Intrahepàtica</option><option value="29">Dental</option><option value="30">Intralesional</option><option value="31">Orofaríngea</option><option value="32">Intralinfàtica</option><option value="33">Endocervical</option><option value="34">Intramedular (Médula ósea)</option><option value="35">Endosinusal</option><option value="36">Intrameningeal</option><option value="37">Periarticular</option><option value="38">Endotraqueal</option><option value="39">Perineural</option><option value="40">Epidural</option><option value="41">Intraocular</option><option value="42">Extra-amniótica</option><option value="43">Intrapericardial</option><option value="44">Hemodiàlisis</option><option value="45">Intraperitoneal</option><option value="46">Retrobulbar</option><option value="47">Intra cos cavernós</option><option value="48">Intrapleural</option><option value="49">Subconjuntival</option><option value="50">Intra-amniótica</option><option value="51">Intrasinovial</option><option value="52">Intrarterial</option><option value="53">Intratumoral</option><option value="54">Subdérmica</option><option value="55">Intrarticular</option><option value="56">Intratecal</option><option value="57">Intrauterí</option><option value="58">Intratoràcica</option><option value="59">Intracardíaca</option><option value="60">Intratraqueal</option><option value="61">Intracavernosa</option><option value="62">Transmamària</option><option value="63">Intracerebral</option><option value="64">Intracervical</option><option value="65">Uretral</option><option value="66">Intracisternal</option><option value="67">Intracorneal</option><option value="68">Iontoforesis</option><option value="69">Intracoronaria</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_dataInici alpha" style="line-height:1.7em;" align="right">Data inici (dd/mm/aaaa)</div><div class="td-value grid_8 f_dataInici omega" align="left"><input type="text" size="12" maxlength="10" class="txt-default-format hasDatepicker" name="dataInici" id="dataInici" value="01/03/2021">&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="Pots fer servir el calendari per especificar-la o escriure lliurement en el camp de data. Formats d'exemple: dd/mm/aaaa, mm/aaaa, aaaa."></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_dataFinal alpha" style="line-height:1.7em;" align="right">Data final (dd/mm/aaaa)</div><div class="td-value grid_8 f_dataFinal omega" align="left"><input type="text" size="12" maxlength="10" class="txt-default-format hasDatepicker" name="dataFinal" id="dataFinal" value="01/03/2021">&nbsp;<span style="display: inline-block;" class="ajuda ui-icon-green ui-icon-info" title="Pots fer servir el calendari per especificar-la o escriure lliurement en el camp de data. Formats d'exemple: dd/mm/aaaa, mm/aaaa, aaaa."></span></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_prescripcio alpha" style="line-height:1.7em;" align="right">Motiu de prescripció</div><div class="td-value grid_8 f_prescripcio omega" align="left"><input type="text" maxlength="256" class="txt-full-format" name="prescripcio" id="prescripcio" value="Inmunización frente a COVID-19"></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_4 f_mesuraPresa alpha" style="line-height:1.7em;" align="right">Mesura presa</div><div class="td-value grid_8 f_mesuraPresa omega" align="left"><select class="txt-default-format" name="mesuraPresa" id="mesuraPresa"><option value="1">-</option><option value="2" selected="selected">AD - Augment de la dosi</option><option value="3">Desc - Desconeguda</option><option value="4">NA - No aplicable</option><option value="5">NMD - No es modifica la dosi</option><option value="6">RD - Reducció de la dosi</option><option value="7">RF - Retirada del fàrmac</option></select></div></div>
+<div class="clear">&nbsp;</div>
+<div class="grid_12 alpha omega">&nbsp;</div><div class="grid_12 alpha omega"><hr></div><div class="grid_12  alpha omega" style=""><div class="td-value2-bold grid_6 f_formComplet alpha" style="line-height:1.7em;" align="right">Dades de formulari completes</div><div class="td-value grid_6 f_formComplet omega" align="left"><input type="checkbox" class="txt-default-format" name="formComplet" id="formComplet"></div></div>
+<div class="clear">&nbsp;</div>
+
+
+                <br>
+                <table width="100%" border="0">
+                    <tbody><tr>
+                        <td class="td-section">&nbsp;Accions</td>
+                    </tr>
+                    <tr>
+                        <td class="td-value" align="right">
+                            <input type="submit" name="cmdSave" value="Guardar" id="cmdSave" class="cmd-format">
+                            <input type="button" name="cmdExitNoSave" value="Sortir sense guardar els canvis" onclick="sortirSenseCanvis()" class="cmd-format">
+                        </td>
+                    </tr>
+                </tbody></table>
+                <input type="hidden" id="id" name="id" value="92">
+                <input type="hidden" id="class" name="class" value="org.icf.pangu.beans.PreSospitaFarmac">
+                <input type="hidden" id="nomentitat" name="nomentitat" value="PreSospitaFarmac92">
+            </form>
+
+            </div>
+        </center>
+    
+                </div>
+                <div class="clear">&nbsp;</div>
+                
+
+
+<!--
+  tmpl_foot - plantilla de peu de pagina 
+-->
+
+      <div class="grid_12 footer" align="center">
+        2022 © CFVCAT
+      </div>
+
+            </div>
+        </center>
+    
+
+
+<div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"><div>Si s'ha indicat <i>Sí</i> a <i>El medicament és biològic?</i>, especificar aquí <i>No</i> com a resposta.</div></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span></body></html>

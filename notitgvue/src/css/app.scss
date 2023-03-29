@@ -1,0 +1,16 @@
+// app global css in SCSS form
+
+.text-tg {
+  font-maily: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: $primary;
+}
+.text-size16 {
+  font-size: 16px;
+}
+.bg-terciary {
+  background-color: $terciary;
+}
+
+.q-field__bottom {
+  padding: 3px 12px 0;
+}
