@@ -8,8 +8,8 @@ import axios from 'axios'
 // "export default () => {}" function below (which runs individually
 // for each client)
 // http://localhost:9097
-// https://crf3.w3nexus.net/cfvcat_tgneram/x/cfvcat/api/
-const api = axios.create({ baseURL: 'https://crf3.w3nexus.net/cfvcat_tgneram/x/cfvcat/api/' })
+// https://cfvcat.salut.gencat.cat/cfvcat_tgneram/x/cfvcat/api/
+const api = axios.create({ baseURL: 'https://cfvcat.salut.gencat.cat/cfvcat_tgneram/x/cfvcat/api/' })
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
